@@ -70,7 +70,7 @@ import { MenuItem } from "../types/Menu";
 
 export default function Dashboard() {
   const router = useRouter();
-  const handleMenuSelect = (label: MenuItem) => setSelectedMenu(label);
+  // const handleMenuSelect = (label: MenuItem) => setSelectedMenu(label);
   const [selectedMenu, setSelectedMenu] = useState<MenuItem>("overview");
 
   useEffect(() => {
@@ -107,7 +107,10 @@ export default function Dashboard() {
       <div className="bg-gray-600 max-h-screen p-8 overflow-hidden">
         <Header />
         <div className="flex mt-10 mb-10">
-          <Menu onMenuSelect={handleMenuSelect} />
+          <Menu
+            selectedMenu={selectedMenu}
+            onMenuSelect={(label: MenuItem) => setSelectedMenu(label)}
+          />
           <MenuInfo selectedMenu={selectedMenu} />
         </div>
       </div>
