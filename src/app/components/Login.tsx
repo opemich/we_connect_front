@@ -12,56 +12,59 @@ const LoginForm = () => {
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  setError("");
-  setSuccess("");
-
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ identifier, password }),
-    });
-
-    let data;
+    e.preventDefault();
+    setError("");
+    setSuccess("");
 
     try {
-      data = await res.json();
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ identifier, password }),
+      });
 
-       if (res.ok) {
-      localStorage.setItem("token", data.token); // ✅ Save token
-    } else {
-      // alert(data.error);
+      let data;
+
+      try {
+        data = await res.json();
+
+        if (res.ok) {
+          localStorage.setItem("token", data.token); // ✅ Save token
+        } else {
+          // alert(data.error);
+        }
+      } catch (jsonErr) {
+        console.error("Failed to parse JSON response:", jsonErr);
+        const text = await res.text(); // fallback to raw response
+        console.error("Raw server response:", text);
+        throw new Error("Server returned invalid JSON");
+      }
+
+      if (!res.ok) {
+        throw new Error(data.error || "Login failed");
+      }
+
+      // Save token to localStorage
+      localStorage.setItem("token", data.token);
+
+      setSuccess("Login successful!");
+      setIdentifier("");
+      setPassword("");
+
+      // Redirect after a delay
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1000);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Something went wrong");
+      }
     }
-
-    } catch (jsonErr) {
-      const text = await res.text(); // fallback to raw response
-      console.error("Raw server response:", text);
-      throw new Error("Server returned invalid JSON");
-    }
-
-    if (!res.ok) {
-      throw new Error(data.error || "Login failed");
-    }
-
-    // Save token to localStorage
-    localStorage.setItem("token", data.token);
-
-    setSuccess("Login successful!");
-    setIdentifier("");
-    setPassword("");
-
-    // Redirect after a delay
-    setTimeout(() => {
-      router.push("/dashboard");
-    }, 1000);
-  } catch (err: any) {
-    setError(err.message || "Something went wrong");
-  }
-};
-
+  };
 
   return (
     <div className="space-y-4 bg-gray-400 p-14 px-20 rounded-md shadow-md">
@@ -114,8 +117,16 @@ const LoginForm = () => {
           </div>
         </div>
 
-        {error && <p className="text-red-500 text-sm border border-red-500 p-2 rounded bg-red-100">{error}</p>}
-        {success && <p className="text-green-500 text-sm border border-green-500 p-2 rounded bg-green-100">{success}</p>}
+        {error && (
+          <p className="text-red-500 text-sm border border-red-500 p-2 rounded bg-red-100">
+            {error}
+          </p>
+        )}
+        {success && (
+          <p className="text-green-500 text-sm border border-green-500 p-2 rounded bg-green-100">
+            {success}
+          </p>
+        )}
       </form>
     </div>
   );

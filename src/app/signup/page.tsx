@@ -50,13 +50,16 @@ const MyForm = () => {
     }
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/submit-form`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/submit-form`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       const result = await response.json();
       console.log("Form submitted successfully:", result);
@@ -82,17 +85,19 @@ const MyForm = () => {
         password: "",
         confirmPassword: "",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error submitting form:", error);
-      // setSuccessMessage("Something went wrong. Please try again.");
-      setErrorMessage(
-        error.message || "Failed to submit the form. Please try again."
-      );
+
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage("Failed to submit the form. Please try again.");
+      }
     }
-  }; // This function handles form submission
+  };
 
   useEffect(() => {
-    if (errorMessage || successMessage ) {
+    if (errorMessage || successMessage) {
       const timer = setTimeout(() => {
         setErrorMessage("");
         setSuccessMessage("");

@@ -420,14 +420,17 @@ const Account = () => {
         setUser(userData);
         setTempUser(userData);
         console.log("=== END FRONTEND DEBUG ===");
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.log("=== FRONTEND ERROR DEBUG ===");
-        console.log("Error status:", err.response?.status);
-        console.log("Error data:", err.response?.data);
-        console.log("Full error:", err);
+        if (axios.isAxiosError(err)) {
+          console.log("Error status:", err.response?.status);
+          console.log("Error data:", err.response?.data);
+        } else {
+          console.log("Full error:", err);
+        }
         console.log("=== END ERROR DEBUG ===");
 
-        if (err.response?.status === 401) {
+        if (axios.isAxiosError(err) && err.response?.status === 401) {
           setError("Authentication failed. Please log in again.");
           localStorage.removeItem("token");
         } else {
@@ -540,18 +543,22 @@ const Account = () => {
       setIsEditing(false);
       setProfileImage(null);
       setImagePreview(null);
-    } catch (err: any) {
-      if (err.response?.status === 401) {
-        setError("Authentication failed. Please log in again.");
-        localStorage.removeItem("token");
-      } else {
-        setError("Failed to update profile. Please try again.");
-      }
-      console.error("Error updating user:", err);
-    } finally {
-      setSaving(false);
+    } catch (err: unknown) {
+  if (axios.isAxiosError(err)) {
+    if (err.response?.status === 401) {
+      setError("Authentication failed. Please log in again.");
+      localStorage.removeItem("token");
+    } else {
+      setError("Failed to update profile. Please try again.");
     }
-  };
+    console.error("Axios error updating user:", err.response?.data);
+  } else {
+    setError("An unexpected error occurred.");
+    console.error("Unknown error:", err);
+  }
+}
+}
+
 
   // Cancel editing
   const handleCancel = () => {
