@@ -7,6 +7,7 @@ import { PiBusLight } from "react-icons/pi";
 import { LiaPlaneSolid } from "react-icons/lia";
 import { PiGasPumpLight } from "react-icons/pi";
 import { CiDumbbell } from "react-icons/ci";
+import Image from 'next/image';
 
 export default function Overview() {
   return (
@@ -16,7 +17,7 @@ export default function Overview() {
                 <div className='flex gap-3'>
                     <div className="text-[#2E335B]">
                         <p className='mb-5 font-bold text-[14px]'>Dashboard</p>
-                        <img src="/images/Card.png" alt='card' />
+                        <Image src="/images/Card.png" alt='card' />
                     </div>
 
                     <div className="text-[#2E335B]">
@@ -103,7 +104,7 @@ export default function Overview() {
                     </select>
                 </div>
 
-                <img src="/images/Table.png" alt="chart" />
+                <Image src="/images/Table.png" alt="chart" />
 
                 <div className="mt-4">
                     <div className="flex justify-between">

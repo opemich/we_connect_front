@@ -343,6 +343,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Image from "next/image";
 
 interface User {
   _id: string;
@@ -609,7 +610,7 @@ const Account = () => {
         {/* Profile Picture Section */}
         <div className="flex flex-col items-center">
           <div className="relative mb-4">
-            <img
+            <Image
               src={
                 imagePreview ||
                 (user.profilePicture

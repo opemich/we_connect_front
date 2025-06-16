@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 
+interface User {
+  token: string;
+  // Add more fields if you decode or fetch actual user info later
+}
+
 export function useAuth() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setUser({ token }); // For real apps, decode token or fetch user profile
+      // Just storing the token for now
+      setUser({ token });
     }
   }, []);
 
@@ -17,3 +23,4 @@ export function useAuth() {
 
   return { user, logout };
 }
+

@@ -98,7 +98,7 @@ export default function Dashboard() {
     };
 
     checkToken();
-  }, []);
+  }, [router]);
 
   return (
     <ProtectedRoute>

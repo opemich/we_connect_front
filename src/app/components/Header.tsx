@@ -64,6 +64,7 @@ import React, { useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { useUser } from "../context/userContext";
+import Image from "next/image";
 
 export default function Header() {
   const { user, refreshUser } = useUser();
@@ -80,7 +81,7 @@ export default function Header() {
     <div className="flex justify-between px-20 mt-2">
       <div className="flex gap-3">
         <div className="flex gap-1">
-          <img
+          <Image
             src="/images/navbrand.png"
             alt="brand name"
             className="w-7 h-8"
@@ -102,7 +103,7 @@ export default function Header() {
       <div className="flex gap-4">
         <p className="text-white text-[12px] mt-2">EN</p>
         <IoIosNotificationsOutline className="mt-2 text-white" />
-        <img
+        <Image
           src={imageSrc}
           alt="Profile"
           className="w-8 h-8 rounded-full object-cover"

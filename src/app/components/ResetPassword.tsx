@@ -217,85 +217,85 @@
 // export default ResetPassword;
 
 
-'use client';
-import React, { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import axios from 'axios';
-import Link from 'next/link';
+// 'use client';
+// import React, { useState } from 'react';
+// import { useRouter, useSearchParams } from 'next/navigation';
+// import axios from 'axios';
+// import Link from 'next/link';
 
-const ResetPassword = () => {
-  const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+// const ResetPassword = () => {
+//   const searchParams = useSearchParams();
+//   const token = searchParams.get('token');
 
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [confirmPassword, setConfirmPassword] = useState('');
+//   const [error, setError] = useState('');
+//   const [loading, setLoading] = useState(false);
+//   const [message, setMessage] = useState('');
 
-  const router = useRouter();
+//   const router = useRouter();
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+// const handleSubmit = async (e: React.FormEvent) => {
+//   e.preventDefault();
 
-  try {
-    const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/reset-password/${token}`, {
-      password,
-      confirmPassword
-    });
+//   try {
+//     const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/reset-password/${token}`, {
+//       password,
+//       confirmPassword
+//     });
 
-    setMessage(res.data.message);
-  } catch (err: any) {
-    setError(err.response?.data?.message || 'Something went wrong');
-  }
-};
-  if (password !== confirmPassword) {
-    setError('Passwords do not match');
-    return;
-  }
-  if (password.length < 8) {
-    setError('Password must be at least 8 characters long');
-    return;
-  }
-  setLoading(true);
-  setError('');
+//     setMessage(res.data.message);
+//   } catch (err: any) {
+//     setError(err.response?.data?.message || 'Something went wrong');
+//   }
+// };
+//   if (password !== confirmPassword) {
+//     setError('Passwords do not match');
+//     return;
+//   }
+//   if (password.length < 8) {
+//     setError('Password must be at least 8 characters long');
+//     return;
+//   }
+//   setLoading(true);
+//   setError('');
 
-  return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-4 text-center">Reset Your Password</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="password"
-          className="w-full px-4 py-2 border rounded"
-          placeholder="New Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          className="w-full px-4 py-2 border rounded"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
-        <button
-          type="submit"
-          className="w-full py-2 bg-green-600 text-white font-semibold rounded hover:bg-green-700"
-          disabled={loading}
-        >
-          {loading ? 'Resetting...' : 'Reset Password'}
-        </button>
-        {error && <p className="text-red-600">{error}</p>}
-      </form>
-      <div className="text-center mt-6">
-  <Link href="/" className="text-white bg-blue-600 px-4 py-2 rounded hover:bg-blue-700">
-    Go to Login
-  </Link>
-</div>
-    </div>
-  );
-};
+//   return (
+//     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+//       <h2 className="text-2xl font-bold mb-4 text-center">Reset Your Password</h2>
+//       <form onSubmit={handleSubmit} className="space-y-4">
+//         <input
+//           type="password"
+//           className="w-full px-4 py-2 border rounded"
+//           placeholder="New Password"
+//           value={password}
+//           onChange={(e) => setPassword(e.target.value)}
+//           required
+//         />
+//         <input
+//           type="password"
+//           className="w-full px-4 py-2 border rounded"
+//           placeholder="Confirm Password"
+//           value={confirmPassword}
+//           onChange={(e) => setConfirmPassword(e.target.value)}
+//           required
+//         />
+//         <button
+//           type="submit"
+//           className="w-full py-2 bg-green-600 text-white font-semibold rounded hover:bg-green-700"
+//           disabled={loading}
+//         >
+//           {loading ? 'Resetting...' : 'Reset Password'}
+//         </button>
+//         {error && <p className="text-red-600">{error}</p>}
+//       </form>
+//       <div className="text-center mt-6">
+//   <Link href="/" className="text-white bg-blue-600 px-4 py-2 rounded hover:bg-blue-700">
+//     Go to Login
+//   </Link>
+// </div>
+//     </div>
+//   );
+// };
 
-export default ResetPassword;
+// export default ResetPassword;
