@@ -239,7 +239,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
   try {
-    const res = await axios.patch(`http://localhost:5000/api/reset-password/${token}`, {
+    const res = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/reset-password/${token}`, {
       password,
       confirmPassword
     });

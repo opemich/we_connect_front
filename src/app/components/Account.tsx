@@ -399,13 +399,13 @@ const Account = () => {
           console.log("Could not decode token:", decodeErr);
         }
 
-        console.log("Making request to: http://localhost:5000/api/data/me");
+        console.log("Making request to: `${process.env.NEXT_PUBLIC_API_URL}/api/data/me`");
         console.log("With headers:", {
           Authorization: `Bearer ${token.substring(0, 20)}...`,
         });
 
         // Fixed API endpoint to match your route
-        const response = await axios.get("http://localhost:5000/api/data/me", {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/data/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

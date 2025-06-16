@@ -106,7 +106,7 @@ export default function ResetPasswordClient() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/reset-password/${token}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/reset-password/${token}`,
         {
           method: "PATCH",
           headers: {

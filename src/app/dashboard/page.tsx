@@ -82,7 +82,7 @@ export default function Dashboard() {
         return;
       }
 
-      const res = await fetch("http://localhost:5000/verify-token", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/verify-token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

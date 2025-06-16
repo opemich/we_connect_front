@@ -73,7 +73,7 @@ export default function Header() {
   }, [refreshUser]);
 
   const imageSrc = user?.profilePicture
-    ? `http://localhost:5000${user.profilePicture}`
+    ? `${process.env.NEXT_PUBLIC_API_URL}/${user.profilePicture}`
     : "/images/Avatar.png";
 
   return (
