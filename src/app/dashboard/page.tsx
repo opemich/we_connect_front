@@ -58,7 +58,6 @@
 // // This page is protected and will only be accessible if the user is authenticated.
 // // If the user is not authenticated, they will be redirected to the login page.
 
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -69,9 +68,9 @@ import MenuInfo from "../components/MenuInfo";
 import Header from "../components/Header";
 import { MenuItem } from "../types/Menu";
 
-
 export default function Dashboard() {
   const router = useRouter();
+  const handleMenuSelect = (label: MenuItem) => setSelectedMenu(label);
   const [selectedMenu, setSelectedMenu] = useState<MenuItem>("overview");
 
   useEffect(() => {
@@ -82,13 +81,16 @@ export default function Dashboard() {
         return;
       }
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/verify-token`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/verify-token`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        }
+      );
 
       const result = await res.json();
       if (!result.valid) {
@@ -102,13 +104,10 @@ export default function Dashboard() {
 
   return (
     <ProtectedRoute>
-      <div className="bg-gray-600 max-h-screen p-8 overflow-hidden"> 
+      <div className="bg-gray-600 max-h-screen p-8 overflow-hidden">
         <Header />
         <div className="flex mt-10 mb-10">
-          <Menu 
-            selectedMenu={selectedMenu} 
-            onMenuSelect={(label) => setSelectedMenu(label)} 
-          />
+          <Menu onMenuSelect={handleMenuSelect} />
           <MenuInfo selectedMenu={selectedMenu} />
         </div>
       </div>

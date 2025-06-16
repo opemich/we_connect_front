@@ -129,6 +129,79 @@
 // //   </div>
 // // );
 
+// "use client";
+
+// import React from "react";
+// import { GoHomeFill } from "react-icons/go";
+// import { TfiEmail } from "react-icons/tfi";
+// import {
+//   HiOutlineWallet,
+//   HiOutlineUserCircle,
+// } from "react-icons/hi2";
+// import {
+//   PiChatsCircle,
+//   PiChartPieLight,
+//   PiStarFourLight,
+//   PiNutLight,
+// } from "react-icons/pi";
+
+// interface MenuProps {
+//   selectedMenu: string;
+//   onMenuSelect: (label: string) => void;
+// }
+
+// interface MenuItem {
+//   label: string;
+//   icon: React.ReactNode;
+//   badge?: string; // Optional (since not all items have badges)
+// }
+
+// export default function Menu({ selectedMenu, onMenuSelect }: MenuProps) {
+//   const menuItems: MenuItem[] = [
+//     { label: "overview", icon: <GoHomeFill /> },
+//     { label: "messages", icon: <TfiEmail />, badge: "2" },
+//     { label: "community", icon: <PiChatsCircle /> },
+//     { label: "payments", icon: <HiOutlineWallet /> },
+//     { label: "statistics", icon: <PiChartPieLight /> },
+//     { label: "referrals", icon: <PiStarFourLight /> },
+//   ];
+
+//   const bottomItems: MenuItem[] = [
+//     { label: "accounts", icon: <HiOutlineUserCircle /> },
+//     { label: "settings", icon: <PiNutLight /> },
+//   ];
+
+//   const renderItem = ({ label, icon, badge }: MenuItem) => (
+//     <div
+//     key={label}
+//     className={`flex gap-3 text-white cursor-pointer ${
+//       selectedMenu === label ? "font-bold underline" : ""
+//     }`}
+//     onClick={() => onMenuSelect(label)}
+//   >
+//     <div className="text-[15px] mt-[2px]">{icon}</div>
+//     <p className="text-[13px]">{label}</p>
+//     {badge && (
+//       <div className="bg-[#E34255] text-[8px] text-white px-[4px] rounded-sm h-[12px] flex items-center">
+//         {badge}
+//       </div>
+//       )}
+//     </div>
+//   );
+
+//   return (
+//     <div className="capitalize px-20 flex flex-col gap-28 mt-16 nav-link">
+//       <div className="flex flex-col gap-6">
+//         {menuItems.map(renderItem)}
+//       </div>
+//       <div className="flex flex-col gap-6">
+//         {bottomItems.map(renderItem)}
+//       </div>
+//     </div>
+//   );
+// }
+
+
 "use client";
 
 import React from "react";
@@ -144,20 +217,22 @@ import {
   PiStarFourLight,
   PiNutLight,
 } from "react-icons/pi";
+import { MenuItem } from "../types/Menu"; // ✅ Import the correct type
 
 interface MenuProps {
-  selectedMenu: string;
-  onMenuSelect: (label: string) => void;
+  selectedMenu: MenuItem;
+  onMenuSelect: (label: MenuItem) => void;
 }
 
-interface MenuItem {
-  label: string;
+// Renamed to avoid conflict with the imported MenuItem type
+interface MenuOption {
+  label: MenuItem;
   icon: React.ReactNode;
-  badge?: string; // Optional (since not all items have badges)
+  badge?: string;
 }
 
 export default function Menu({ selectedMenu, onMenuSelect }: MenuProps) {
-  const menuItems: MenuItem[] = [
+  const menuItems: MenuOption[] = [
     { label: "overview", icon: <GoHomeFill /> },
     { label: "messages", icon: <TfiEmail />, badge: "2" },
     { label: "community", icon: <PiChatsCircle /> },
@@ -166,25 +241,25 @@ export default function Menu({ selectedMenu, onMenuSelect }: MenuProps) {
     { label: "referrals", icon: <PiStarFourLight /> },
   ];
 
-  const bottomItems: MenuItem[] = [
+  const bottomItems: MenuOption[] = [
     { label: "accounts", icon: <HiOutlineUserCircle /> },
     { label: "settings", icon: <PiNutLight /> },
   ];
 
-  const renderItem = ({ label, icon, badge }: MenuItem) => (
+  const renderItem = ({ label, icon, badge }: MenuOption) => (
     <div
-    key={label}
-    className={`flex gap-3 text-white cursor-pointer ${
-      selectedMenu === label ? "font-bold underline" : ""
-    }`}
-    onClick={() => onMenuSelect(label)}
-  >
-    <div className="text-[15px] mt-[2px]">{icon}</div>
-    <p className="text-[13px]">{label}</p>
-    {badge && (
-      <div className="bg-[#E34255] text-[8px] text-white px-[4px] rounded-sm h-[12px] flex items-center">
-        {badge}
-      </div>
+      key={label}
+      className={`flex gap-3 text-white cursor-pointer ${
+        selectedMenu === label ? "font-bold underline" : ""
+      }`}
+      onClick={() => onMenuSelect(label)}
+    >
+      <div className="text-[15px] mt-[2px]">{icon}</div>
+      <p className="text-[13px]">{label}</p>
+      {badge && (
+        <div className="bg-[#E34255] text-[8px] text-white px-[4px] rounded-sm h-[12px] flex items-center">
+          {badge}
+        </div>
       )}
     </div>
   );
@@ -199,4 +274,4 @@ export default function Menu({ selectedMenu, onMenuSelect }: MenuProps) {
       </div>
     </div>
   );
-}
+};
