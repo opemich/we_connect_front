@@ -526,7 +526,7 @@ const Account = () => {
 
       // Fixed API endpoint to match your route
       const response = await axios.put(
-        "http://localhost:5000/api/data/",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/data/`,
         formData,
         {
           headers: {
@@ -618,10 +618,12 @@ const Account = () => {
         <div className="flex flex-col items-center">
           <div className="relative mb-4">
             <Image
+              width={128}
+              height={128}
               src={
                 imagePreview ||
                 (user.profilePicture
-                  ? `http://localhost:5000${user.profilePicture}`
+                  ? `${process.env.NEXT_PUBLIC_API_URL}${user.profilePicture}`
                   : "/images/Avatar.png")
               }
               alt="Profile"

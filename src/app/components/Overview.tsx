@@ -17,7 +17,7 @@ export default function Overview() {
                 <div className='flex gap-3'>
                     <div className="text-[#2E335B]">
                         <p className='mb-5 font-bold text-[14px]'>Dashboard</p>
-                        <Image src="/images/Card.png" alt='card' />
+                        <Image src="/images/Card.png" alt='card' width={500} height={300} />
                     </div>
 
                     <div className="text-[#2E335B]">
@@ -104,7 +104,7 @@ export default function Overview() {
                     </select>
                 </div>
 
-                <Image src="/images/Table.png" alt="chart" />
+                <Image src="/images/Table.png" alt="chart" width={500} height={300} />
 
                 <div className="mt-4">
                     <div className="flex justify-between">

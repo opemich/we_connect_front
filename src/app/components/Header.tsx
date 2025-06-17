@@ -73,15 +73,18 @@ export default function Header() {
     refreshUser(); // Ensures user data is current
   }, [refreshUser]);
 
-  const imageSrc = user?.profilePicture
-    ? `${process.env.NEXT_PUBLIC_API_URL}/${user.profilePicture}`
-    : "/images/Avatar.png";
+ const imageSrc = user?.profilePicture
+  ? `${process.env.NEXT_PUBLIC_API_URL}/${user.profilePicture.replace(/^\/+/, '')}`
+  : "/images/Avatar.png";
+
 
   return (
     <div className="flex justify-between px-20 mt-2">
       <div className="flex gap-3">
         <div className="flex gap-1">
           <Image
+            width={28}
+            height={32}
             src="/images/navbrand.png"
             alt="brand name"
             className="w-7 h-8"
@@ -104,6 +107,8 @@ export default function Header() {
         <p className="text-white text-[12px] mt-2">EN</p>
         <IoIosNotificationsOutline className="mt-2 text-white" />
         <Image
+          width={32}
+          height={32}
           src={imageSrc}
           alt="Profile"
           className="w-8 h-8 rounded-full object-cover"

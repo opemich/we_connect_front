@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  images: {
+    domains: ["we-connect-cgsx.onrender.com"],
+  },
 };
 
 export default nextConfig;
