@@ -143,42 +143,44 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-gray-400 shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-4 text-center text-gray-900">
-        Forgot Password
-      </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="email"
-          className="w-full px-4 py-2 rounded text-black border border-gray-300 focus:outline-offset-1 outline-blue-700"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <button
-          type="submit"
-          className="w-full py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700"
-          disabled={loading}
-        >
-          {loading ? "Sending..." : "Send Reset Link"}
-        </button>
-        {message && (
-          <p className="text-green-500 text-sm border border-green-500 p-2 rounded bg-green-100">
-            {message}
-          </p>
-        )}
-        {error && (
-          <p className="text-red-500 text-sm border border-red-500 p-2 rounded bg-red-100">
-            {error}
-          </p>
-        )}
-      </form>
-      <p className="mt-4 text-center text-sm">
-        <Link href="/" className="text-blue-600 hover:underline">
-          Back to Login
-        </Link>
-      </p>
+    <div className="flex items-center justify-center min-h-screen p-4 md:p-1">
+      <div className="max-w-md mx-auto p-6 bg-gray-400 shadow-md rounded-lg">
+        <h2 className="text-2xl font-bold mb-4 text-center text-gray-900">
+          Forgot Password
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="email"
+            className="w-full px-4 py-2 rounded text-black border border-gray-300 focus:outline-offset-1 outline-blue-700"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <button
+            type="submit"
+            className="w-full py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700"
+            disabled={loading}
+          >
+            {loading ? "Sending..." : "Send Reset Link"}
+          </button>
+          {message && (
+            <p className="text-green-500 text-sm border border-green-500 p-2 rounded bg-green-100">
+              {message}
+            </p>
+          )}
+          {error && (
+            <p className="text-red-500 text-sm border border-red-500 p-2 rounded bg-red-100">
+              {error}
+            </p>
+          )}
+        </form>
+        <p className="mt-4 text-center text-sm">
+          <Link href="/" className="text-blue-600 hover:underline">
+            Back to Login
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };

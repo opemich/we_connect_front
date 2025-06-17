@@ -136,51 +136,53 @@ export default function ResetPasswordClient() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-gray-400 shadow-md rounded-lg">
-      <h1 className="text-2xl font-bold mb-4 text-gray-900 text-center">
-        Reset Your Password
-      </h1>
-
-      <input
-        type="password"
-        placeholder="New password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="w-full px-4 py-2 mb-4 rounded text-black border border-gray-300 focus:outline-offset-1 outline-blue-700"
-        required
-      />
-      <input
-        type="password"
-        placeholder="Confirm new password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-        className="w-full px-4 py-2 mb-4 rounded text-black border border-gray-300 focus:outline-offset-1 outline-blue-700"
-        required
-      />
-      <button
-        onClick={handleReset}
-        disabled={loading}
-        className="bg-blue-500 text-white px-4 py-2 w-full rounded hover:bg-blue-600 disabled:bg-blue-300"
-      >
-        {loading ? "Resetting..." : "Reset Password"}
-      </button>
-
-      {message && (
-        <p className="text-green-500 text-sm border border-green-500 p-2 rounded bg-green-100">
-          {message}
+    <div className="flex items-center justify-center min-h-screen p-4 md:p-1">
+      <div className="max-w-md mx-auto p-6 bg-gray-400 shadow-md rounded-lg">
+        <h1 className="text-2xl font-bold mb-4 text-gray-900 text-center">
+          Reset Your Password
+        </h1>
+      
+        <input
+          type="password"
+          placeholder="New password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full px-4 py-2 mb-4 rounded text-black border border-gray-300 focus:outline-offset-1 outline-blue-700"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Confirm new password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          className="w-full px-4 py-2 mb-4 rounded text-black border border-gray-300 focus:outline-offset-1 outline-blue-700"
+          required
+        />
+        <button
+          onClick={handleReset}
+          disabled={loading}
+          className="bg-blue-500 text-white px-4 py-2 w-full rounded hover:bg-blue-600 disabled:bg-blue-300"
+        >
+          {loading ? "Resetting..." : "Reset Password"}
+        </button>
+      
+        {message && (
+          <p className="text-green-500 text-sm border border-green-500 p-2 rounded bg-green-100">
+            {message}
+          </p>
+        )}
+        {error && (
+          <p className="text-red-500 text-sm border border-red-500 p-2 rounded bg-red-100">
+            {error}
+          </p>
+        )}
+      
+        <p className="mt-4 text-center text-sm">
+          <Link href="/" className="text-blue-600 hover:underline">
+            Back to Login
+          </Link>
         </p>
-      )}
-      {error && (
-        <p className="text-red-500 text-sm border border-red-500 p-2 rounded bg-red-100">
-          {error}
-        </p>
-      )}
-
-      <p className="mt-4 text-center text-sm">
-        <Link href="/" className="text-blue-600 hover:underline">
-          Back to Login
-        </Link>
-      </p>
+      </div>
     </div>
   );
 }

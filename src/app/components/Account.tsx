@@ -1,345 +1,3 @@
-// // import React, { useEffect, useState } from "react";
-// // import axios from "axios";
-
-// // const Account = () => {
-// //   const [user, setUser] = useState(null);
-
-// //   useEffect(() => {
-// //     const token = localStorage.getItem("token");
-// //     axios.get("http://localhost:5000/api/account", {
-// //       headers: { Authorization: `Bearer ${token}` },
-// //     })
-// //     .then(res => setUser(res.data))
-// //     .catch(err => console.error(err));
-// //   }, []);
-
-// //   if (!user) return <p>Loading account info...</p>;
-
-// //   return (
-// //     <div className="p-4">
-// //       <h2 className="text-xl font-bold">Account Info</h2>
-// //       <p><strong>Username:</strong> {user?.username || "Not set"}</p>
-// //       <p><strong>Email:</strong> {user?.email || "Not set"}</p>
-// //       <img src={user?.profilePicture || "/default-avatar.png"} alt="Avatar" className="w-16 h-16 rounded-full mt-2" />
-// //     </div>
-// //   );
-// // };
-
-// // export default Account;
-
-// // 'use client';
-// // import React, { useEffect, useState } from 'react';
-// // import axios from 'axios';
-
-// // const Account = () => {
-// //   const [user, setUser] = useState<any>(null);
-
-// //   useEffect(() => {
-// //     const token = localStorage.getItem("token");
-// //     axios.get("http://localhost:5000/api/account", {
-// //       headers: { Authorization: `Bearer ${token}` },
-// //     })
-// //     .then(res => {
-// //       console.log("User response:", res.data);
-// //       setUser(res.data);
-// //     })
-// //     .catch(err => {
-// //       console.error("Fetch user error:", err);
-// //     });
-// //   }, []);
-
-// //   if (!user) return <p>Loading...</p>;
-
-// //   return (
-// //     <div className="p-4">
-// //       <h2 className="text-xl font-bold">Account Info</h2>
-// //       <p><strong>Username:</strong> {user.username}</p>
-// //       <p><strong>Email:</strong> {user.email}</p>
-// //       <img
-// //         src={user.profilePicture || "/default-avatar.png"}
-// //         alt="Profile"
-// //         className="w-16 h-16 rounded-full mt-2"
-// //       />
-// //     </div>
-// //   );
-// // };
-
-// // export default Account;
-
-// // "use client";
-
-// // import React, { useEffect, useState } from "react";
-// // import axios from "axios";
-
-// // const Account = () => {
-// //   const [user, setUser] = useState<any>(null);
-// //   const [loading, setLoading] = useState(true);
-
-// //   useEffect(() => {
-// //     const token = localStorage.getItem("token"); // or from cookies
-
-// //     if (!token) return;
-
-// //     const fetchUser = async () => {
-// //       try {
-// //         const res = await axios.get("http://localhost:5000/api/account", {
-// //           headers: {
-// //             Authorization: `Bearer ${token}`,
-// //           },
-// //         });
-
-// //         setUser(res.data.user);
-// //       } catch (error) {
-// //         console.error("Failed to fetch user:", error);
-// //       } finally {
-// //         setLoading(false);
-// //       }
-// //     };
-
-// //     fetchUser();
-// //   }, []);
-
-// //   if (loading) return <p>Loading...</p>;
-// //   if (!user) return <p>No user data found</p>;
-
-// //   return (
-// //     <div className="bg-[#FCFBF9] rounded-3xl p-7 text-black shadow-md w-full">
-// //       <h2 className="text-xl font-bold">Account Info</h2>
-// //       <p><strong>Username:</strong> {user.username}</p>
-// //       <p><strong>Email:</strong> {user.email}</p>
-// //       <img
-// //         src={user.profilePicture || "/default-avatar.png"}
-// //         alt="Profile"
-// //         className="w-16 h-16 rounded-full mt-2"
-// //       />
-// //     </div>
-// //   );
-// // };
-
-// // export default Account;
-
-// "use client";
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-
-// interface User {
-//   _id: string;
-//   username: string;
-//   email: string;
-//   mobile?: string;
-//   profilePicture?: string;
-// }
-
-// const Account = () => {
-//   const [user, setUser] = useState<User | null>(null);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState<string | null>(null);
-//   const [isEditing, setIsEditing] = useState(false);
-//   const [tempUser, setTempUser] = useState<Partial<User>>({});
-//   const [profileImage, setProfileImage] = useState<File | null>(null);
-//   const [imagePreview, setImagePreview] = useState<string | null>(null);
-
-//   useEffect(() => {
-//     const fetchUserData = async () => {
-//       try {
-//         const token = localStorage.getItem("token");
-//         if (!token) {
-//           setError("No authentication token found");
-//           return;
-//         }
-
-//         const response = await axios.get("http://localhost:5000/api/me", {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         });
-
-//         setUser(response.data.user);
-//         setTempUser(response.data.user);
-//       } catch (err) {
-//         setError("Failed to fetch user data");
-//         console.error("Error fetching user:", err);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchUserData();
-//   }, []);
-
-//   // Handle file selection for profile picture
-//   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     if (e.target.files && e.target.files[0]) {
-//       const file = e.target.files[0];
-//       setProfileImage(file);
-
-//       // Create preview
-//       const reader = new FileReader();
-//       reader.onloadend = () => {
-//         setImagePreview(reader.result as string);
-//       };
-//       reader.readAsDataURL(file);
-//     }
-//   };
-
-//   // Handle text input changes
-//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = e.target;
-//     setTempUser((prev) => ({ ...prev, [name]: value }));
-//   };
-
-//   // Save changes
-//   const handleSave = async () => {
-//     if (!user) return;
-
-//     try {
-//       const token = localStorage.getItem("token");
-//       const formData = new FormData();
-
-//       // Append text data
-//       formData.append("username", tempUser.username || user.username);
-
-//       // Append image if selected
-//       if (profileImage) {
-//         formData.append("profilePicture", profileImage);
-//       }
-
-//       const response = await axios.put(
-//         `http://localhost:5000/api/${user._id}`,
-//         formData,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//             "Content-Type": "multipart/form-data",
-//           },
-//         }
-//       );
-
-//       setUser(response.data.user);
-//       setIsEditing(false);
-//       setProfileImage(null);
-//       setImagePreview(null);
-//     } catch (err) {
-//       setError("Failed to update user");
-//       console.error("Error updating user:", err);
-//     }
-//   };
-
-//   if (loading) return <div className="p-4">Loading...</div>;
-//   if (error) return <div className="p-4 text-red-500">{error}</div>;
-//   if (!user) return <div className="p-4">No user data found</div>;
-
-//   return (
-//     <div className="bg-[#FCFBF9] rounded-3xl p-7 text-black shadow-md w-full max-w-2xl mx-auto">
-//       <h2 className="text-2xl font-bold mb-6">Account Information</h2>
-
-//       <div className="flex flex-col md:flex-row gap-8">
-//         {/* Profile Picture Section */}
-//         <div className="flex flex-col items-center">
-//           <div className="relative mb-4">
-//             <img
-//               src={imagePreview || user.profilePicture || "/default-avatar.png"}
-//               alt="Profile"
-//               className="w-32 h-32 rounded-full object-cover border-2 border-gray-200"
-//             />
-//             {isEditing && (
-//               <label className="absolute bottom-0 right-0 bg-blue-500 text-white rounded-full p-2 cursor-pointer">
-//                 <input
-//                   type="file"
-//                   accept="image/*"
-//                   onChange={handleImageChange}
-//                   className="hidden"
-//                 />
-//                 <svg
-//                   xmlns="http://www.w3.org/2000/svg"
-//                   className="h-5 w-5"
-//                   viewBox="0 0 20 20"
-//                   fill="currentColor"
-//                 >
-//                   <path
-//                     fillRule="evenodd"
-//                     d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z"
-//                     clipRule="evenodd"
-//                   />
-//                 </svg>
-//               </label>
-//             )}
-//           </div>
-//         </div>
-
-//         {/* User Information Section */}
-//         <div className="flex-1 space-y-4">
-//           <div>
-//             <label className="block text-sm font-medium text-gray-700">
-//               Username
-//             </label>
-//             {isEditing ? (
-//               <input
-//                 type="text"
-//                 name="username"
-//                 value={tempUser.username || ""}
-//                 onChange={handleInputChange}
-//                 className="mt-1 p-2 w-full border rounded-md"
-//               />
-//             ) : (
-//               <p className="mt-1 p-2 bg-gray-100 rounded-md">{user.username}</p>
-//             )}
-//           </div>
-
-//           <div>
-//             <label className="block text-sm font-medium text-gray-700">
-//               Email
-//             </label>
-//             <p className="mt-1 p-2 bg-gray-100 rounded-md">{user.email}</p>
-//           </div>
-
-//           {user.mobile && (
-//             <div>
-//               <label className="block text-sm font-medium text-gray-700">
-//                 Mobile
-//               </label>
-//               <p className="mt-1 p-2 bg-gray-100 rounded-md">{user.mobile}</p>
-//             </div>
-//           )}
-
-//           <div className="flex gap-4 pt-4">
-//             {isEditing ? (
-//               <>
-//                 <button
-//                   onClick={handleSave}
-//                   className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-//                 >
-//                   Save Changes
-//                 </button>
-//                 <button
-//                   onClick={() => {
-//                     setIsEditing(false);
-//                     setTempUser(user);
-//                     setProfileImage(null);
-//                     setImagePreview(null);
-//                   }}
-//                   className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
-//                 >
-//                   Cancel
-//                 </button>
-//               </>
-//             ) : (
-//               <button
-//                 onClick={() => setIsEditing(true)}
-//                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-//               >
-//                 Edit Profile
-//               </button>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Account;
-
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -400,17 +58,22 @@ const Account = () => {
           console.log("Could not decode token:", decodeErr);
         }
 
-        console.log("Making request to: `${process.env.NEXT_PUBLIC_API_URL}/api/data/me`");
+        console.log(
+          "Making request to: `${process.env.NEXT_PUBLIC_API_URL}/api/data/me`"
+        );
         console.log("With headers:", {
           Authorization: `Bearer ${token.substring(0, 20)}...`,
         });
 
         // Fixed API endpoint to match your route
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/data/me`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/data/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         console.log("Response received:", response.status);
         console.log("Response data:", response.data);
@@ -544,21 +207,20 @@ const Account = () => {
       setProfileImage(null);
       setImagePreview(null);
     } catch (err: unknown) {
-  if (axios.isAxiosError(err)) {
-    if (err.response?.status === 401) {
-      setError("Authentication failed. Please log in again.");
-      localStorage.removeItem("token");
-    } else {
-      setError("Failed to update profile. Please try again.");
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 401) {
+          setError("Authentication failed. Please log in again.");
+          localStorage.removeItem("token");
+        } else {
+          setError("Failed to update profile. Please try again.");
+        }
+        console.error("Axios error updating user:", err.response?.data);
+      } else {
+        setError("An unexpected error occurred.");
+        console.error("Unknown error:", err);
+      }
     }
-    console.error("Axios error updating user:", err.response?.data);
-  } else {
-    setError("An unexpected error occurred.");
-    console.error("Unknown error:", err);
-  }
-}
-}
-
+  };
 
   // Cancel editing
   const handleCancel = () => {
@@ -613,7 +275,7 @@ const Account = () => {
         </div>
       )}
 
-      <div className="flex flex-col md:flex-row gap-8 overflow-y-auto max-h-[60vh]">
+      <div className="flex flex-col md:flex-row gap-8 overflow-y-auto md:max-h-[60vh] max-h-[75vh]">
         {/* Profile Picture Section */}
         <div className="flex flex-col items-center">
           <div className="relative mb-4">
