@@ -286,7 +286,7 @@
 //               </button>
 //             </Link>
 //           </div>
-        
+
 //           {(errorMessage || successMessage || passwordError) && (
 //             <div className="mt-4 bg-white p-4 rounded-md shadow-md border border-black">
 //               {errorMessage && (
@@ -294,14 +294,14 @@
 //                   {errorMessage}
 //                 </p>
 //               )}
-        
+
 //               {/* success message */}
 //               {successMessage && (
 //                 <p className="text-green-500 p-2 text-center text-sm mt-2">
 //                   {successMessage}
 //                 </p>
 //               )}
-        
+
 //               {passwordError && (
 //                 <p className="text-red-500 text-sm mt-1">{passwordError}</p>
 //               )}
@@ -314,7 +314,6 @@
 // };
 
 // export default MyForm;
-
 
 "use client";
 
@@ -342,16 +341,67 @@ const MyForm = () => {
   });
 
   const formFields = [
-    { label: "Full-Name", name: "fullname", type: "text", placeholder: "Enter your fullname" },
-    { label: "Username", name: "username", type: "text", placeholder: "Enter your username" },
-    { label: "Email", name: "email", type: "email", placeholder: "Enter your email..." },
-    { label: "Mobile", name: "mobile", type: "text", placeholder: "Enter your mobile number...", maxLength: 11 },
-    { label: "Address", name: "address", type: "text", placeholder: "Enter your address..." },
-    { label: "City", name: "city", type: "text", placeholder: "Enter your city..." },
-    { label: "State", name: "state", type: "text", placeholder: "Enter your state..." },
-    { label: "Country", name: "country", type: "text", placeholder: "Enter your country..." },
-    { label: "Password", name: "password", type: "password", placeholder: "Choose your password..." },
-    { label: "Confirm Password", name: "confirmPassword", type: "password", placeholder: "Confirm your password..." },
+    {
+      label: "Full-Name",
+      name: "fullname",
+      type: "text",
+      placeholder: "Enter your fullname",
+    },
+    {
+      label: "Username",
+      name: "username",
+      type: "text",
+      placeholder: "Enter your username",
+    },
+    {
+      label: "Email",
+      name: "email",
+      type: "email",
+      placeholder: "Enter your email...",
+    },
+    {
+      label: "Mobile",
+      name: "mobile",
+      type: "text",
+      placeholder: "Enter your mobile number...",
+      maxLength: 11,
+    },
+    {
+      label: "Address",
+      name: "address",
+      type: "text",
+      placeholder: "Enter your address...",
+    },
+    {
+      label: "City",
+      name: "city",
+      type: "text",
+      placeholder: "Enter your city...",
+    },
+    {
+      label: "State",
+      name: "state",
+      type: "text",
+      placeholder: "Enter your state...",
+    },
+    {
+      label: "Country",
+      name: "country",
+      type: "text",
+      placeholder: "Enter your country...",
+    },
+    {
+      label: "Password",
+      name: "password",
+      type: "password",
+      placeholder: "Choose your password...",
+    },
+    {
+      label: "Confirm Password",
+      name: "confirmPassword",
+      type: "password",
+      placeholder: "Confirm your password...",
+    },
   ];
 
   const handleChange = (
@@ -390,8 +440,16 @@ const MyForm = () => {
       const result = await response.json();
       console.log("Form submitted successfully:", result);
 
+      // if (!response.ok) {
+      //   throw new Error(result.error || "Something went wrong");
+      // }
       if (!response.ok) {
-        throw new Error(result.error || "Something went wrong");
+        // Check for errors array
+        if (result.errors && result.errors.length > 0) {
+          throw new Error(result.errors[0].msg); // Show first validation error
+        } else {
+          throw new Error(result.error || "Something went wrong");
+        }
       }
 
       setSuccessMessage(result.message || "Form submitted successfully.");
@@ -438,7 +496,10 @@ const MyForm = () => {
         className="space-y-4 bg-gray-400 py-10 px-4 sm:px-8 md:px-16 rounded-md shadow-md w-full max-w-lg"
       >
         {formFields.map((field, index) => (
-          <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-start sm:items-center w-full relative">
+          <div
+            key={index}
+            className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-start sm:items-center w-full relative"
+          >
             <label htmlFor={field.name} className="text-black w-full sm:w-40">
               {field.label}:
             </label>
@@ -474,17 +535,11 @@ const MyForm = () => {
           </Link>
         </div>
 
-        {(errorMessage || successMessage || passwordError) && (
+        {(errorMessage || passwordError) && (
           <div className="mt-4 bg-red-100 p-4 rounded-md shadow-md border border-red-500">
             {errorMessage && (
               <p className="text-red-500 p-2 text-center text-sm mt-2">
                 {errorMessage}
-              </p>
-            )}
-
-            {successMessage && (
-              <p className="text-green-500 p-2 text-center text-sm mt-2">
-                {successMessage}
               </p>
             )}
 
@@ -493,10 +548,17 @@ const MyForm = () => {
             )}
           </div>
         )}
+
+        {successMessage && (
+          <div className="mt-4 bg-green-100 p-4 rounded-md shadow-md border border-green-500">
+            <p className="text-green-500 p-2 text-center text-sm mt-2">
+              {successMessage}
+            </p>
+          </div>
+        )}
       </form>
     </div>
   );
 };
 
 export default MyForm;
-

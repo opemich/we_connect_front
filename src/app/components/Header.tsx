@@ -205,13 +205,15 @@ interface HeaderProps {
 export default function Header({ isMobileMenuOpen, toggleMobileMenu }: HeaderProps) {
   const { user, refreshUser } = useUser();
 
+  
+  const imageSrc = user?.profilePicture && user.profilePicture.trim() !== ""
+  ? `${process.env.NEXT_PUBLIC_API_URL}/${user.profilePicture.replace(/^\/+/, '')}`
+  : "/images/Avatar.png";
+  
   useEffect(() => {
     refreshUser(); // Ensures user data is current
-  }, [refreshUser]);
-
-  const imageSrc = user?.profilePicture
-    ? `${process.env.NEXT_PUBLIC_API_URL}/${user.profilePicture.replace(/^\/+/, '')}`
-    : "/images/Avatar.png";
+    console.log('imageSrc:', imageSrc);
+  }, [imageSrc, refreshUser]);
 
   return (
     <div className="flex justify-between px-4 md:px-20 mt-2">

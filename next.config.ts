@@ -12,8 +12,8 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    domains: ["we-connect-cgsx.onrender.com"],
-    // domains: ["localhost", "we-connect-cgsx.onrender.com"],
+    // domains: ["we-connect-cgsx.onrender.com"],
+    domains: ["localhost", "we-connect-cgsx.onrender.com"],
 
   },
 };
